@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import ReactDOM from 'react-dom/client';
 // Types
 import type { View, Product, CartItem } from './components/types';
 import type { Currency } from './components/currency';
@@ -95,7 +94,6 @@ const App: React.FC = () => {
     useEffect(() => {
         parseUrlParams();
         
-        // Logic to fetch cart from server if 'v' param exists
         const initCart = async () => {
             const urlParams = new URLSearchParams(window.location.search);
             const v = urlParams.get('v');
@@ -103,12 +101,10 @@ const App: React.FC = () => {
             if (v) {
                 setIsLoadingCart(true);
                 try {
-                    // Fetch from API
                     const serverCart = await fetchServerCart(v);
                     if (serverCart && serverCart.length > 0) {
                         setCartItems(serverCart);
-                        // If fetching a specific cart ID, showing summary makes sense
-                        setView({ current: 'checkoutSummary' });
+                        // Only redirect to checkout if explicitly in a 'recover cart' flow, otherwise let them browse
                     } else {
                         loadLocalCart();
                     }
@@ -174,7 +170,7 @@ const App: React.FC = () => {
         }
     }, [view]);
 
-    // Save cart to local storage whenever it changes
+    // Save cart to local storage
     useEffect(() => {
         if (!isLoadingCart) {
             try {
@@ -185,7 +181,6 @@ const App: React.FC = () => {
         }
     }, [cartItems, isLoadingCart]);
     
-    // Scroll to top on view change
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [view]);
@@ -221,6 +216,7 @@ const App: React.FC = () => {
         if (!isCartOpen) setIsCartOpen(true);
     };
 
+    // --- CRITICAL FIX: HANDLE BUY NOW ---
     const handleBuyNow = (product: Product, buttonElement: HTMLButtonElement | null, selectedVariant: Record<string, string> | null) => {
         const cartItemId = selectedVariant 
             ? `${product.id}-${Object.values(selectedVariant).join('-')}`
@@ -236,6 +232,7 @@ const App: React.FC = () => {
             setCartItems([...cartItems, { id: cartItemId, product, quantity: 1, selectedVariant }]);
         }
         
+        // Navigate directly to checkout summary
         handleNavigate('checkoutSummary');
     };
 

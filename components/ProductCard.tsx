@@ -80,23 +80,31 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
         e.stopPropagation();
         if (product.stock === 0) return;
 
-        if (hasManyVariants) {
-            onProductSelect(product);
-        } else {
-            let defaultVariant = null;
-            if (product.variants) {
-                defaultVariant = {};
-                for (const key in product.variants) {
-                     if (product.variants[key].length > 0) {
-                        defaultVariant[key] = product.variants[key][0].value;
-                     }
+        try {
+            if (hasManyVariants) {
+                onProductSelect(product);
+            } else {
+                let defaultVariant = null;
+                if (product.variants) {
+                    defaultVariant = {};
+                    for (const key in product.variants) {
+                         if (product.variants[key].length > 0) {
+                            defaultVariant[key] = product.variants[key][0].value;
+                         }
+                    }
+                }
+                
+                if (onBuyNow) {
+                    onBuyNow(product, buyNowBtnRef.current, defaultVariant);
+                } else {
+                    // Fallback safely if onBuyNow isn't passed down
+                    onQuickAddToCart(product, addToCartBtnRef.current, defaultVariant);
                 }
             }
-            if (onBuyNow) {
-                onBuyNow(product, buyNowBtnRef.current, defaultVariant);
-            } else {
-                onQuickAddToCart(product, addToCartBtnRef.current, defaultVariant);
-            }
+        } catch (err) {
+            console.error("Error processing Buy Now:", err);
+            // Prevent blank screen by just opening product details
+            onProductSelect(product);
         }
     };
 
@@ -182,6 +190,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, currency, onA
                         {/* 1. GOOGLE PAY BUTTON - EXPLICIT & GREEN (Primary) */}
                         {product.stock > 0 && (
                             <button
+                                ref={buyNowBtnRef}
                                 onClick={handleBuyNowClick}
                                 className="w-full py-3 rounded-lg font-bold text-xs transition-all shadow-md hover:shadow-lg bg-black hover:bg-gray-900 border border-transparent flex items-center justify-center relative overflow-hidden text-white transform hover:-translate-y-0.5"
                                 title="Pagar ahora con Google Play"
