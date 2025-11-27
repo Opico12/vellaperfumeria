@@ -394,7 +394,7 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
                         <button 
                             type="submit"
                             disabled={isProcessing}
-                            className={`w-full bg-black text-white font-extrabold py-4 rounded-xl shadow-lg hover:bg-gray-900 transition-all transform active:scale-95 flex justify-center items-center gap-2 text-lg ${isProcessing ? 'opacity-70 cursor-wait' : ''}`}
+                            className={`w-full ${paymentMethod === 'google_play' ? 'bg-black hover:bg-gray-900' : 'bg-black hover:bg-gray-900'} text-white font-extrabold py-4 rounded-xl shadow-lg transition-all transform active:scale-95 flex justify-center items-center gap-2 text-lg ${isProcessing ? 'opacity-70 cursor-wait' : ''}`}
                         >
                             {isProcessing ? (
                                 <>
@@ -405,7 +405,14 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
                                     Procesando...
                                 </>
                             ) : (
-                                `PAGAR ${formatCurrency(total, currency)}`
+                                paymentMethod === 'google_play' ? (
+                                    <>
+                                        <GooglePlayLogo />
+                                        PAGAR CON GOOGLE PAY {formatCurrency(total, currency)}
+                                    </>
+                                ) : (
+                                    `PAGAR ${formatCurrency(total, currency)}`
+                                )
                             )}
                         </button>
                         
