@@ -40,7 +40,7 @@ const GooglePlayLogo = () => (
 );
 
 const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({ 
-    cartItems = [], // Default to empty array to prevent crash
+    cartItems, 
     currency, 
     onNavigate
 }) => {
@@ -77,12 +77,10 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
 
     // --- CALCULATIONS ---
     const subtotal = useMemo(() => {
-        if (!cartItems) return 0;
         return cartItems.reduce((total, item) => total + item.product.price * item.quantity, 0);
     }, [cartItems]);
 
     const shippingCost = useMemo(() => {
-        if (!cartItems) return 0;
         const hasShippingSaver = cartItems.some(item => item.product.isShippingSaver);
         return (hasShippingSaver || subtotal >= FREE_SHIPPING_THRESHOLD) ? 0 : SHIPPING_COST;
     }, [subtotal, cartItems]);
@@ -230,7 +228,7 @@ const CheckoutSummaryPage: React.FC<CheckoutSummaryPageProps> = ({
     }
 
     // --- EMPTY CART VIEW ---
-    if (!cartItems || cartItems.length === 0) {
+    if (cartItems.length === 0) {
         return (
             <div className="container mx-auto px-4 py-16 text-center">
                 <div className="bg-white rounded-3xl p-12 shadow-sm border border-gray-100 max-w-xl mx-auto">
