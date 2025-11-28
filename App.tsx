@@ -363,4 +363,129 @@ const App: React.FC = () => {
                             50% { width: 50%; margin-left: 25%; }
                             100% { width: 0%; margin-left: 100%; }
                         }
-                    `}</style
+                    `}</style>
+                </div>
+            )}
+
+            <a 
+                href="https://api.whatsapp.com/send?phone=34661202616&text=Hola,%20tengo%20una%20consulta%20sobre%20mi%20pedido%20en%20Vellaperfumeria."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="fixed bottom-24 md:bottom-8 right-6 z-[60] bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center gap-2 group border-2 border-white"
+                aria-label="Chat de WhatsApp"
+            >
+                <WhatsAppFloatIcon />
+                <span className="hidden group-hover:inline-block font-bold whitespace-nowrap transition-all">Ayuda 661-202-616</span>
+            </a>
+            
+            <Header
+                onNavigate={handleNavigate}
+                currency={currency}
+                onCurrencyChange={setCurrency}
+                cartCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                onCartClick={() => setIsCartOpen(true)}
+            />
+             <main className="flex-grow py-8 mb-20 md:mb-0">
+                <Breadcrumbs items={buildBreadcrumbs()} />
+                {renderContent()}
+            </main>
+            <Footer onNavigate={handleNavigate} />
+
+            <CartSidebar
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                cartItems={cartItems}
+                currency={currency}
+                onUpdateQuantity={handleUpdateQuantity}
+                onRemoveItem={handleRemoveItem}
+                onCheckout={handleCheckout}
+                isCheckingOut={false}
+                checkoutError={null}
+                onNavigate={handleNavigate}
+                onClearCart={() => setCartItems([])} 
+            />
+
+            <BottomNavBar onNavigate={handleNavigate} currentView={view.current} />
+
+            {quickViewProduct && (
+                <QuickViewModal
+                    product={quickViewProduct}
+                    currency={currency}
+                    onClose={() => setQuickViewProduct(null)}
+                    onAddToCart={handleAddToCart}
+                    onProductSelect={(p) => {
+                        setQuickViewProduct(null);
+                        handleProductSelect(p);
+                    }}
+                />
+            )}
+            
+            <style>{`
+                :root {
+                    --color-primary: #f78df685;
+                    --color-primary-solid: #d946ef;
+                    --color-secondary: #ffffff; 
+                    --color-accent: #c026d3;
+                }
+                ::selection {
+                    background-color: var(--color-primary-solid);
+                    color: white;
+                }
+                .btn-primary {
+                    background-color: var(--color-primary);
+                    color: black !important;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 0.75rem;
+                    font-weight: 600;
+                    transition: all 0.3s ease;
+                    border: 2px solid var(--color-primary-solid);
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                }
+                .btn-primary:hover {
+                    background-color: white;
+                    color: var(--color-primary-solid) !important;
+                    border-color: var(--color-primary-solid);
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                }
+                 .bg-brand-primary { background-color: var(--color-primary); }
+                 .text-brand-primary { color: var(--color-primary-solid); }
+                 .bg-brand-secondary { background-color: var(--color-secondary); }
+                 .text-brand-accent { color: var(--color-accent); }
+                 .border-brand-primary { border-color: var(--color-primary-solid); }
+                 .ring-brand-primary { --tw-ring-color: var(--color-primary-solid); }
+                 .hover-underline-effect {
+                    display: inline-block;
+                    position: relative;
+                 }
+                 .hover-underline-effect::after {
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    transform: scaleX(0);
+                    height: 2px;
+                    bottom: -2px;
+                    left: 0;
+                    background-color: var(--color-primary-solid);
+                    transform-origin: bottom right;
+                    transition: transform 0.25s ease-out;
+                 }
+                 .hover-underline-effect:hover::after {
+                    transform: scaleX(1);
+                    transform-origin: bottom left;
+                 }
+                 .logo-inverted { filter: brightness(0) invert(1); }
+                 @keyframes pop {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.3); }
+                    100% { transform: scale(1); }
+                 }
+                 .animate-pop {
+                    animation: pop 0.3s ease-out;
+                 }
+            `}</style>
+        </div>
+    );
+};
+
+export default App;
