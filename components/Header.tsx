@@ -95,17 +95,17 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
     return (
         <header className="bg-white shadow-sm sticky top-0 z-30">
             {/* Top Bar */}
-            <div className="bg-[var(--color-primary)] text-black py-1 text-[10px] md:text-xs font-medium border-b border-fuchsia-200/50">
+            <div className="bg-[#f78df685] text-black py-1 text-[10px] md:text-xs font-medium border-b border-fuchsia-200/50">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                     <div className="hidden md:flex items-center space-x-3 text-black">
-                        <span className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="Threads"><ThreadsIcon /></span>
-                        <span className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="Instagram"><InstagramIcon /></span>
-                        <span className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="Facebook"><FacebookIcon /></span>
+                        <a href="https://www.threads.net/@vellaperfumeria" target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="Threads"><ThreadsIcon /></a>
+                        <a href="https://www.instagram.com/vellaperfumeria/" target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="Instagram"><InstagramIcon /></a>
+                        <a href="https://www.facebook.com/vellaperfumeria/" target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="Facebook"><FacebookIcon /></a>
                         <a href="https://api.whatsapp.com/send?phone=34661202616" target="_blank" rel="noopener noreferrer" className="cursor-pointer hover:opacity-75 transition-opacity" aria-label="WhatsApp"><WhatsAppIcon /></a>
                     </div>
                     <div className="block w-full text-center text-black">
                         <span>
-                            <span className="font-extrabold text-black">BLACK FRIDAY</span> | Envío GRATIS +35€
+                            <span className="font-extrabold text-black">BLACK FRIDAY</span> | 50% DTO | Envío GRATIS +35€
                         </span>
                     </div>
                     <div className="hidden md:flex items-center space-x-4">
@@ -132,7 +132,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
                             <img 
                                 src="https://i0.wp.com/vellaperfumeria.com/wp-content/uploads/2025/06/1000003724-removebg-preview.png" 
                                 alt="Vellaperfumeria Logo" 
-                                className="h-24 w-auto object-contain" 
+                                className="h-16 w-auto object-contain" 
                             />
                         </button>
                     </div>
@@ -153,9 +153,9 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
                 </div>
 
                 {/* DESKTOP HEADER: Stacked Layout - Logo Centered Top, Nav Below */}
-                <div className="hidden md:flex flex-col items-center py-4 relative">
+                <div className="hidden md:flex flex-col items-center py-2 relative">
                     {/* Row 1: Logo Centered */}
-                    <div className="w-full flex justify-center items-center relative mb-4">
+                    <div className="w-full flex justify-center items-center relative mb-2">
                         <button 
                             onClick={() => onNavigate('home')}
                             className="block cursor-pointer transition-transform hover:scale-105 duration-300 bg-transparent border-none p-0"
@@ -163,12 +163,13 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
                             <img 
                                 src="https://i0.wp.com/vellaperfumeria.com/wp-content/uploads/2025/06/1000003724-removebg-preview.png" 
                                 alt="Vellaperfumeria Logo" 
-                                className="h-28 w-auto object-contain" 
+                                className="h-24 w-auto object-contain" 
                             />
                         </button>
 
                         {/* Cart Icon - Absolute Right in the Logo Row */}
-                        <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
+                        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 flex items-center gap-4">
+                            <a href="https://vellaperfumeria.com" className="text-sm font-semibold hover:underline text-gray-600 hidden lg:block">Ir a Web Principal</a>
                             <button 
                                 className={`cart-dest-icon relative p-2 text-black hover:text-[var(--color-primary-solid)] transition-colors ${cartPulse ? 'animate-pop' : ''}`}
                                 onClick={onCartClick}
@@ -184,8 +185,8 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
                     </div>
 
                     {/* Row 2: Navigation Menu Centered */}
-                    <nav className="flex justify-center space-x-8 w-full border-t border-gray-100 pt-4">
-                        <NavLink onClick={() => onNavigate('home')}>Inicio</NavLink>
+                    <nav className="flex justify-center space-x-6 w-full border-t border-gray-100 pt-2">
+                        <NavLink href="https://vellaperfumeria.com">Inicio</NavLink>
                         <NavLink onClick={() => onNavigate('products', 'all')}>Tienda</NavLink>
                         <NavLink onClick={() => onNavigate('ofertas')}>Ideas Regalo</NavLink>
                         <NavLink onClick={() => onNavigate('catalog')}>Catálogo</NavLink>
@@ -200,14 +201,14 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, currency, onCurrencyChange,
                 <div className="fixed inset-0 z-50 md:hidden">
                     <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}></div>
                     <div ref={navRef} className="absolute top-0 left-0 w-4/5 max-w-xs h-full bg-white shadow-xl flex flex-col transform transition-transform duration-300 ease-in-out">
-                        <div className="p-5 flex justify-between items-center border-b bg-[var(--color-secondary)]">
+                        <div className="p-5 flex justify-between items-center border-b bg-[#f78df685]">
                             <span className="font-bold text-lg text-[var(--color-primary-solid)]">Menú</span>
                             <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-gray-500">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                             </button>
                         </div>
                         <div className="flex-grow overflow-y-auto py-4">
-                             <button onClick={() => handleMobileNav('home')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Inicio</button>
+                             <a href="https://vellaperfumeria.com" className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Inicio</a>
                              <button onClick={() => handleMobileNav('products', 'all')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Tienda</button>
                              <button onClick={() => handleMobileNav('ofertas')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Ideas Regalo</button>
                              <button onClick={() => handleMobileNav('catalog')} className="block w-full text-left px-6 py-3 text-lg font-medium text-gray-800 hover:bg-fuchsia-50 hover:text-[var(--color-primary-solid)]">Catálogo</button>
